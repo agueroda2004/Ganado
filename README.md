@@ -57,6 +57,7 @@ Cada animal tiene:
 | `estado`           | Propio, Medias                   |
 | `socio`            | Solo cuando el estado es Medias  |
 | `finca`            | Jupa, San Francisco              |
+| `notas`            | Texto libre, **opcional** (máx. 500) |
 
 **Regla:** el campo `socio` solo se muestra (y es obligatorio) cuando el estado
 es `Medias`. Si el estado es `Propio`, se oculta y se guarda vacío.
@@ -85,6 +86,34 @@ se marcan con **"Código antiguo"** y al editarlos se pide el formato nuevo.
 - **Exportar:** descarga un archivo `ganado-AAAA-MM-DD.json` con todos los datos.
 - **Importar:** lee un `.json`, valida cada registro y permite **fusionar** con los
   datos actuales (por código) o **reemplazar** todo. Los registros inválidos se omiten.
+
+## Sin conexión (offline)
+
+La app funciona sin internet:
+
+- Todos los datos viven en el `localStorage` del teléfono. No hay servidor.
+- El service worker guarda el app shell y los archivos compilados, así que la app
+  abre aunque no haya conexión.
+
+Para que funcione en el teléfono:
+
+1. Entra una vez con internet e **instala** la app (Agregar a pantalla de inicio).
+   El guardado offline empieza después de esa primera visita.
+2. Necesita **HTTPS**, así que debe estar desplegada. En `localhost` solo sirve
+   para probar en la computadora.
+
+Cosas a tener en cuenta:
+
+- Los datos están en el navegador del teléfono. Si borras los datos del sitio,
+  se pierden. **Exporta respaldos** de vez en cuando.
+- El contenido de la app se cachea, pero las actualizaciones se aplican solas
+  (`autoUpdate`) la próxima vez que abras con conexión.
+
+## Notas
+
+Cada animal puede tener notas libres (opcional, hasta 500 caracteres) en el
+formulario. Si un animal tiene notas, la tarjeta muestra un pequeño icono y el
+detalle las muestra completas.
 
 ## Estructura
 

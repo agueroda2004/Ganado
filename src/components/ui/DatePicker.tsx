@@ -417,6 +417,7 @@ export function DatePicker({
               onChange(todayStr);
               setViewMonth(today.getMonth());
               setViewYear(today.getFullYear());
+              setIsOpen(false);
             }}
             className="flex-1 rounded-md border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
           >

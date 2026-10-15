@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f4f5;
+  --surface: #ffffff;
+  --foreground: #0a0a0a;
+  --muted: #f4f4f5;
+  --muted-foreground: #737373;
+  --border: #e4e4e7;
+  --primary: #0a0a0a;
+  --primary-foreground: #fafafa;
+  --danger: #dc2626;
+  --danger-foreground: #ffffff;
+  --info: #2563eb;
+  --info-foreground: #ffffff;
+  --success: #16a34a;
+  --success-foreground: #ffffff;
+  --tag: #f5b91e;
+  --tag-foreground: #1c1500;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-tag: var(--tag);
+  --color-tag-foreground: var(--tag-foreground);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior-y: none;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-muted-foreground);
+  }
+}
+
+@keyframes sheet-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sheet-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes sheet-panel-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheet-panel-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-sheet-backdrop-in {
+    animation: sheet-backdrop-in 200ms ease-out forwards;
+  }
+
+  .animate-sheet-backdrop-out {
+    animation: sheet-backdrop-out 200ms ease-in forwards;
+  }
+
+  .animate-sheet-panel-in {
+    animation: sheet-panel-in 260ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+
+  .animate-sheet-panel-out {
+    animation: sheet-panel-out 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 220ms ease-out forwards;
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}

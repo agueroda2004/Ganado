@@ -12,8 +12,10 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "icon.svg", "apple-touch-icon-180x180.png"],
       workbox: {
-        globPatterns: ["**/*.{js,css,ico,png,svg,webmanifest}"],
-        navigateFallback: undefined,
+        // Se precachea también index.html y se usa como fallback de navegación
+        // para que la app abra sin conexión desde la pantalla de inicio.
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,webmanifest}"],
+        navigateFallback: "index.html",
       },
       manifest: {
         name: "Ganado",

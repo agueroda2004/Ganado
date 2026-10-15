@@ -24,7 +24,8 @@ dist-ssr
 *.sw?
 
 # Env
-# .env se versiona a propósito: la clave se incrusta en el bundle al compilar,
-# así que debe existir durante el build (Vercel, GitHub Pages, etc.).
+# Los .env no se versionan: la clave se configura en el proveedor de hosting
+# como variable de entorno (VITE_ACCESS_CODE). Ver .env.example.
+.env
 .env.local
 .env.*.local

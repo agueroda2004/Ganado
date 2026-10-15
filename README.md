@@ -19,11 +19,17 @@ npm run generate-assets   # regenerar íconos PWA desde public/icon.svg
 
 ## Clave de acceso
 
-La clave se lee de la variable `VITE_ACCESS_CODE` del archivo `.env`:
+La clave se lee de la variable de entorno `VITE_ACCESS_CODE`.
+
+En local, copia `.env.example` a `.env` (ese archivo **no** se versiona):
 
 ```
 VITE_ACCESS_CODE=Chon
 ```
+
+En el hosting (Vercel, Netlify, GitHub Pages, etc.) configúrala como variable
+de entorno para que exista al momento de compilar, ya que Vite la incrusta en
+el bundle.
 
 Al escribir la clave correcta se guarda un valor en `localStorage`
 (`ganado:auth`) para no volver a pedirla. El botón de salir en el encabezado

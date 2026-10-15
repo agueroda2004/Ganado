@@ -20,6 +20,7 @@ function normalizeImportItem(raw: unknown): Animal | null {
   const codigo = typeof item.codigo === "string" ? item.codigo.trim() : "";
   const raza = typeof item.raza === "string" ? item.raza.trim() : "";
   const nombre = typeof item.nombre === "string" ? item.nombre.trim().slice(0, 40) : "";
+  const notas = typeof item.notas === "string" ? item.notas.trim().slice(0, 500) : "";
   const fechaNacimiento =
     typeof item.fechaNacimiento === "string" ? item.fechaNacimiento : "";
 
@@ -41,6 +42,7 @@ function normalizeImportItem(raw: unknown): Animal | null {
     estado,
     socio,
     finca: item.finca,
+    notas,
     createdAt: typeof item.createdAt === "string" ? item.createdAt : now,
     updatedAt: typeof item.updatedAt === "string" ? item.updatedAt : now,
   };

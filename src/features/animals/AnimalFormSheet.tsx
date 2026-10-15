@@ -5,6 +5,7 @@ import { Dropdown, type DropdownOption } from "../../components/ui/Dropdown";
 import { Field } from "../../components/ui/Field";
 import { BottomSheet } from "../../components/ui/BottomSheet";
 import { TextField } from "../../components/ui/TextField";
+import { TextArea } from "../../components/ui/TextArea";
 import { AnimalCodeField } from "./AnimalCodeField";
 import { BREEDS } from "../../data/breeds";
 import { digitsOnly, formatAnimalCode, isCompleteAnimalCode } from "../../lib/animal-code";
@@ -63,6 +64,7 @@ export function AnimalFormSheet({
         estado: animal.estado,
         socio: animal.socio,
         finca: animal.finca,
+        notas: animal.notas ?? "",
       });
     } else {
       setForm(createEmptyAnimalInput());
@@ -126,6 +128,7 @@ export function AnimalFormSheet({
       estado: form.estado,
       socio: form.estado === "Medias" ? form.socio.trim() : "",
       finca: form.finca,
+      notas: form.notas.trim(),
     });
     onClose();
   }
@@ -227,6 +230,19 @@ export function AnimalFormSheet({
             onChange={(value) => update("finca", value as Finca)}
             options={FINCA_OPTIONS}
           />
+        </Field>
+
+        <Field label="Notas" htmlFor="notas" optional>
+          <TextArea
+            id="notas"
+            value={form.notas}
+            onChange={(value) => update("notas", value)}
+            placeholder="Observaciones, tratamiento, etc."
+            maxLength={500}
+          />
+          <p className="text-right text-xs text-muted-foreground">
+            {form.notas.length}/500
+          </p>
         </Field>
       </div>
     </BottomSheet>

@@ -85,6 +85,17 @@ export function AnimalDetailSheet({ animal, open, onClose, onEdit }: AnimalDetai
             {isMedias && <DetailRow label="Socio" value={shown.socio} />}
             <DetailRow label="Finca" value={shown.finca} />
           </div>
+
+          {shown.notas.trim() && (
+            <div className="rounded-2xl border border-border bg-surface p-4">
+              <p className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Notas
+              </p>
+              <p className="whitespace-pre-wrap break-words text-sm text-foreground">
+                {shown.notas}
+              </p>
+            </div>
+          )}
         </div>
       )}
     </BottomSheet>

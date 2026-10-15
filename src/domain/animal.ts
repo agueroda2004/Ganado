@@ -19,6 +19,8 @@ export interface Animal {
   /** Nombre del socio. Solo aplica cuando el estado es "Medias". */
   socio: string;
   finca: Finca;
+  /** Notas libres. Opcional. */
+  notas: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -35,6 +37,7 @@ export function createEmptyAnimalInput(): AnimalInput {
     estado: "Propio",
     socio: "",
     finca: "Jupa",
+    notas: "",
   };
 }
 

@@ -1,4 +1,4 @@
-import { AlertTriangle, Calendar, MapPin, Pencil, Trash2, User } from "lucide-react";
+import { AlertTriangle, Calendar, MapPin, MessageSquare, Pencil, Trash2, User } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { isCompleteAnimalCode } from "../../lib/animal-code";
 import type { Animal } from "../../domain/animal";
@@ -96,6 +96,15 @@ export function AnimalCard({ animal, onSelect, onEdit, onDelete }: AnimalCardPro
             <span className="inline-flex items-center gap-1.5">
               <User className="h-3.5 w-3.5" />
               {animal.socio}
+            </span>
+          )}
+          {animal.notas.trim() && (
+            <span
+              title="Este animal tiene notas"
+              aria-label="Tiene notas"
+              className="inline-flex items-center gap-1.5"
+            >
+              <MessageSquare className="h-3.5 w-3.5" />
             </span>
           )}
           {!isCompleteAnimalCode(animal.codigo) && (

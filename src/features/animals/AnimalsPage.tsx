@@ -5,7 +5,7 @@ import { BottomSheet } from "../../components/ui/BottomSheet";
 import { ConfirmSheet } from "../../components/ui/ConfirmSheet";
 import { Toast, type ToastMessage } from "../../components/ui/Toast";
 import type { Animal, AnimalInput } from "../../domain/animal";
-import { digitsOnly } from "../../lib/animal-code";
+import { codeMatchesFilter, filterDigits } from "../../lib/animal-code";
 import { exportAnimals, parseImport } from "../../storage/animals-storage";
 import { AnimalCard } from "./AnimalCard";
 import { AnimalDetailSheet } from "./AnimalDetailSheet";
@@ -64,13 +64,9 @@ export function AnimalsPage({ onLogout }: AnimalsPageProps) {
   }, [animals]);
 
   const filtered = useMemo(() => {
-    const rawQuery = filters.codigo.trim();
-    const digitQuery = digitsOnly(rawQuery);
+    const query = filterDigits(filters.codigo.trim());
     return animals.filter((animal) => {
-      if (rawQuery) {
-        if (!digitQuery) return false;
-        if (!digitsOnly(animal.codigo).includes(digitQuery)) return false;
-      }
+      if (!codeMatchesFilter(animal.codigo, query)) return false;
       if (filters.socio && animal.socio !== filters.socio) return false;
       if (filters.finca && animal.finca !== filters.finca) return false;
       return true;

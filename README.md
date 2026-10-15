@@ -71,6 +71,10 @@ El código se escribe solo con números y se formatea automáticamente al patró
 En la tarjeta, los primeros 5 números se ven pequeños y los últimos 4 más
 grandes, como en un arete real.
 
+El filtro de código busca por los **últimos 4 dígitos**: escribe `6789` y
+aparecen los animales cuyo código termina en esos dígitos. Solo acepta números
+(máximo 4), así que lo que esté en medio del código ya no coincide.
+
 El nombre es opcional: si lo escribes, aparece como título de la tarjeta y la
 raza queda debajo. Si lo dejas vacío, la tarjeta muestra la raza como título.
 

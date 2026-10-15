@@ -41,6 +41,28 @@ export function formatAnimalCode(value: string): string {
   return parts.join("-");
 }
 
+/** Cantidad de dígitos finales que usa el filtro de código. */
+export const CODE_TAIL_LENGTH = 4;
+
+/**
+ * Normaliza lo que se escribe en el filtro: solo dígitos, máximo 4.
+ * (El filtro trabaja sobre los últimos 4 dígitos, sin guiones.)
+ */
+export function filterDigits(value: string): string {
+  return value.replace(/\D+/g, "").slice(0, CODE_TAIL_LENGTH);
+}
+
+/** Últimos 4 dígitos de un código. */
+export function codeTail(codigo: string): string {
+  return digitsOnly(codigo).slice(-CODE_TAIL_LENGTH);
+}
+
+/** ¿El código coincide con el filtro por sus últimos 4 dígitos? */
+export function codeMatchesFilter(codigo: string, query: string): boolean {
+  if (!query) return true;
+  return codeTail(codigo).includes(query);
+}
+
 /** Solo es válido cuando tiene los 9 dígitos. */
 export function isCompleteAnimalCode(value: string): boolean {
   return digitsOnly(value).length === CODE_DIGITS;

@@ -1,8 +1,7 @@
-import { useRef } from "react";
 import { Search, X } from "lucide-react";
 import { Dropdown, type DropdownOption } from "../../components/ui/Dropdown";
 import { FINCAS } from "../../domain/animal";
-import { caretAfterDigits, countDigits, formatAnimalCode } from "../../lib/animal-code";
+import { filterDigits } from "../../lib/animal-code";
 
 export interface AnimalFilters {
   codigo: string;
@@ -29,23 +28,6 @@ export function Filters({ filters, socioOptions, onChange }: FiltersProps) {
   }));
 
   const hasFilters = Boolean(filters.codigo || filters.socio || filters.finca);
-  const codigoInputRef = useRef<HTMLInputElement>(null);
-
-  function handleCodigoChange(raw: string) {
-    const element = codigoInputRef.current;
-    const caret = element?.selectionStart ?? raw.length;
-    const digitsBeforeCaret = countDigits(raw.slice(0, caret));
-    const formatted = formatAnimalCode(raw);
-
-    onChange({ ...filters, codigo: formatted });
-
-    requestAnimationFrame(() => {
-      const node = codigoInputRef.current;
-      if (!node) return;
-      const position = caretAfterDigits(formatted, digitsBeforeCaret);
-      node.setSelectionRange(position, position);
-    });
-  }
 
   return (
     <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm">
@@ -67,12 +49,13 @@ export function Filters({ filters, socioOptions, onChange }: FiltersProps) {
         <div className="relative">
           <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
-            ref={codigoInputRef}
             type="text"
             inputMode="numeric"
             value={filters.codigo}
-            onChange={(event) => handleCodigoChange(event.target.value)}
-            placeholder="Buscar por código (2-3-4)"
+            onChange={(event) =>
+              onChange({ ...filters, codigo: filterDigits(event.target.value) })
+            }
+            placeholder="Últimos 4 dígitos del código"
             className="h-11 w-full rounded-xl border border-border bg-surface pl-10 pr-3.5 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
           />
         </div>

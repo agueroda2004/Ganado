@@ -7,6 +7,7 @@ import { BottomSheet } from "../../components/ui/BottomSheet";
 import { TextField } from "../../components/ui/TextField";
 import { TextArea } from "../../components/ui/TextArea";
 import { AnimalCodeField } from "./AnimalCodeField";
+import { calculateMonths, isoMonthsAgo } from "./animal-utils";
 import { BREEDS } from "../../data/breeds";
 import { digitsOnly, formatAnimalCode, isCompleteAnimalCode } from "../../lib/animal-code";
 import {
@@ -50,10 +51,13 @@ export function AnimalFormSheet({
 }: AnimalFormSheetProps) {
   const [form, setForm] = useState<AnimalInput>(createEmptyAnimalInput);
   const [errors, setErrors] = useState<FormErrors>({});
+  // Solo para el formulario: no se guarda. Sirve para calcular la fecha rápido.
+  const [meses, setMeses] = useState("");
 
   useEffect(() => {
     if (!open) return;
     setErrors({});
+    setMeses("");
     if (animal) {
       setForm({
         nombre: animal.nombre ?? "",
@@ -82,6 +86,20 @@ export function AnimalFormSheet({
     if (key === "codigo" || key === "raza" || key === "fechaNacimiento" || key === "socio") {
       setErrors((current) => ({ ...current, [key]: undefined }));
     }
+  }
+
+  function handleMesesChange(raw: string) {
+    const digits = raw.replace(/\D+/g, "").slice(0, 3);
+    const clamped = digits === "" ? "" : String(Math.min(300, Number(digits)));
+    setMeses(clamped);
+    if (clamped === "") return;
+    update("fechaNacimiento", isoMonthsAgo(Number(clamped)));
+  }
+
+  function handleFechaChange(value: string) {
+    update("fechaNacimiento", value);
+    const months = value ? calculateMonths(value) : null;
+    setMeses(months === null ? "" : String(months));
   }
 
   function validate(): boolean {
@@ -193,13 +211,29 @@ export function AnimalFormSheet({
         </Field>
 
         <Field label="Fecha de nacimiento" error={errors.fechaNacimiento}>
-          <DatePicker
-            value={form.fechaNacimiento}
-            onChange={(value) => update("fechaNacimiento", value)}
-            maxDate={new Date()}
-            placeholder="Seleccionar fecha"
-            invalid={Boolean(errors.fechaNacimiento)}
-          />
+          <div className="flex items-start gap-3">
+            <div className="min-w-0 flex-1">
+              <DatePicker
+                value={form.fechaNacimiento}
+                onChange={handleFechaChange}
+                maxDate={new Date()}
+                placeholder="Seleccionar fecha"
+                invalid={Boolean(errors.fechaNacimiento)}
+              />
+            </div>
+            <div className="w-24 shrink-0">
+              <TextField
+                value={meses}
+                onChange={handleMesesChange}
+                placeholder="Meses"
+                ariaLabel="Meses"
+                inputMode="numeric"
+              />
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Opcional: escribe los meses y la fecha se calcula sola.
+          </p>
         </Field>
 
         <Field label="Estado">

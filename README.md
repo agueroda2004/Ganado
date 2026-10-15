@@ -115,6 +115,17 @@ Cada animal puede tener notas libres (opcional, hasta 500 caracteres) en el
 formulario. Si un animal tiene notas, la tarjeta muestra un pequeño icono y el
 detalle las muestra completas.
 
+## Fecha rápida con meses
+
+En el formulario de crear/editar hay un campo **Meses** (opcional) junto a la
+fecha de nacimiento. Escribe los meses y la fecha se calcula sola contando
+meses de calendario: por ejemplo `18` pone la fecha de hace 18 meses.
+
+- Sirve solo para llenar la fecha más rápido. **No se guarda** en el animal.
+- También funciona al revés: al elegir una fecha, el campo muestra la edad en meses.
+- Si el día no existe en el mes destino, se ajusta al último día (1 mes antes
+  del 31 de marzo es el 28 o 29 de febrero).
+
 ## Estructura
 
 ```

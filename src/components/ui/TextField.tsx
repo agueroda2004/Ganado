@@ -13,6 +13,7 @@ interface TextFieldProps {
   autoFocus?: boolean;
   className?: string;
   inputRef?: RefObject<HTMLInputElement | null>;
+  ariaLabel?: string;
 }
 
 export function TextField({
@@ -27,11 +28,13 @@ export function TextField({
   autoFocus = false,
   className,
   inputRef,
+  ariaLabel,
 }: TextFieldProps) {
   return (
     <input
       id={id}
       ref={inputRef}
+      aria-label={ariaLabel}
       type="text"
       value={value}
       onChange={(event) => onChange(event.target.value)}
